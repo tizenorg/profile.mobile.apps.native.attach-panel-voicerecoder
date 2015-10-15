@@ -1,0 +1,9 @@
+msgid "IDS_VR_BODY_RECORDING"
+msgstr "正在录制…"
+
+msgid "IDS_VR_TPOP_UNABLE_TO_SAVE_RECORDING_RECORDING_TOO_SHORT"
+msgstr "无法保存录音。录音太短。"
+
+msgid "IDS_ST_BUTTON_TAP_AND_HOLD_TO_RECORD_ABB"
+msgstr "轻敲并按住以录音"
+

@@ -1,0 +1,9 @@
+msgid "IDS_VR_BODY_RECORDING"
+msgstr "Nahrávání"
+
+msgid "IDS_VR_TPOP_UNABLE_TO_SAVE_RECORDING_RECORDING_TOO_SHORT"
+msgstr "Nahrávku nelze uložit. Nahrávka je příliš krátká."
+
+msgid "IDS_ST_BUTTON_TAP_AND_HOLD_TO_RECORD_ABB"
+msgstr "Klep. a držte pro nahr."
+

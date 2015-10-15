@@ -1,0 +1,6 @@
+msgid "IDS_VR_BODY_RECORDING"
+msgstr "Eo am-pakana..."
+
+msgid "IDS_ST_BUTTON_TAP_AND_HOLD_TO_RECORD_ABB"
+msgstr "Tap and hold to record"
+

@@ -1,0 +1,9 @@
+msgid "IDS_VR_BODY_RECORDING"
+msgstr "રેકોર્ડિંગ"
+
+msgid "IDS_VR_TPOP_UNABLE_TO_SAVE_RECORDING_RECORDING_TOO_SHORT"
+msgstr "રેકોર્ડિંગ સાચવવામાં અસમર્થ. રેકોર્ડિંગ ખૂબ ટૂંકી છે."
+
+msgid "IDS_ST_BUTTON_TAP_AND_HOLD_TO_RECORD_ABB"
+msgstr "રૅકોર્ડ કરવા માટે ટેપ અને હોલ્ડ કરો"
+

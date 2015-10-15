@@ -1,0 +1,6 @@
+msgid "IDS_VR_BODY_RECORDING"
+msgstr "Nagrywanie"
+
+msgid "IDS_ST_BUTTON_TAP_AND_HOLD_TO_RECORD_ABB"
+msgstr "Dotk.i przytrz., by nagr."
+

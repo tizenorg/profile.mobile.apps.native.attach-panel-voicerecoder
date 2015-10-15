@@ -1,0 +1,6 @@
+msgid "IDS_VR_BODY_RECORDING"
+msgstr "ဖမ္းယူေနသည္…"
+
+msgid "IDS_ST_BUTTON_TAP_AND_HOLD_TO_RECORD_ABB"
+msgstr "အသံဖမ္းရန္ ႏွိပ္ၿပီး ထိန္းကိုင္ထားပါ"
+

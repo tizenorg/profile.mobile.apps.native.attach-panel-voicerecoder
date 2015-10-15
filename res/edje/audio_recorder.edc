@@ -1,0 +1,834 @@
+/*
+* Copyright (c) 2000-2015 Samsung Electronics Co., Ltd All Rights Reserved
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+*/
+
+collections
+{
+group {
+  name:"audio_recorder_hd";
+  images {
+    image:"bg.png" COMP;
+    image:"bg_pressed.png" COMP;
+    image:"icon_close.png" COMP;
+    image:"icon_pause.png" COMP;
+    image:"icon_play.png" COMP;
+    image:"icon_rec.png" COMP;
+    image:"icon_stop.png" COMP;
+    image:"drawer.png" COMP;
+    image:"voice_attach_bg.png" COMP;
+    image:"toolbar_icon_rec.png" COMP;
+    image:"toolbar_control_stop.png" COMP;
+    image:"toolbar_control_bg.png" COMP;
+  }
+
+  parts {
+    part {
+      name:"bg";
+      type:RECT;
+      description {
+        state:"default" 0.0;
+        rel1 {
+          relative:0.0 0.0;
+
+        }
+        rel2 {
+          relative: 1.0 1.0;
+        }
+        color:0 0 0 0;
+      }
+    }//end bg
+	part {
+      name:"bg_image";
+      type:IMAGE;
+      description {
+        state:"default" 0.0;
+        rel1 {
+          relative:0.0 0.0;
+
+        }
+        rel2 {
+          relative: 1.0 1.0;
+        }
+        image.normal:"voice_attach_bg.png";
+      }
+    }
+    part {
+      name:"recorder_title_bg";
+      type:RECT;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+        rel1 { relative:0.0 0.021; to:"bg";}
+        rel2 { relative: 1.0 0.058;to:"bg";}
+        color:0 0 0 0;
+      }
+    }//end recorder_title
+
+    part {
+      name:"recorder_title";
+      type:TEXT;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+		min: 720 50;
+		rel1 { relative: 0.5 0.0; to:"bg"; offset: 0 50;}
+		rel2 { relative: 0.5 0.0; to:"bg"; offset: 0 50;}
+        color:255 255 255 255;
+        text { font: "Tizen:style=Light";align:0.5 0.5; size: 40; text:"Tap and hold to record"; }
+      }
+	  description {
+			state: "default_compact" 0.0;
+			min: 720 50;
+			rel1 { relative: 0.5 0.0; to: "bg"; offset: 0 40;}
+			rel2 { relative: 0.5 0.0; to: "bg"; offset: 0 40;}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 40; text:"Tap and hold to record"; }
+		}
+      description {
+        state:"recording" 0.0;
+        inherit:"default";
+        text { font: "Tizen:style=Light";align:0.5 0.5; size: 40; text:"Recording..."; }
+      }
+		description {
+			state:"recording_compact" 0.0;
+			inherit:"default_compact";
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 40; text:"Recording..."; }
+		}
+    }//end recorder_title
+	part {
+		name:"recorder_timer";
+		type:TEXT;
+		description {
+			state:"default" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.0 0.388; to: "bg";}
+			rel2 { relative: 1.0 0.523; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 120; text:"00 : 00"; }
+		}
+		description {
+			state:"default_compact" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.0 0.176; to: "bg";}
+			rel2 { relative: 1.0 0.567; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 120; text:"00 : 00"; }
+		}
+	}//end recorder_timer
+    part {
+      name:"record_icon_bg";
+      type:IMAGE;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+        min:120 120;
+        max:120 120;
+        rel1 { relative: 0.41 1.0; to: "bg";offset: 0 -174;}
+        rel2 { relative: 0.60 1.0; to: "bg";offset: 0 -38;}
+        align:0.5 0.5;
+        image.normal:"toolbar_control_bg.png";
+        color: 250 250 250 255;
+        visible:1;
+      }
+		description {
+			state: "default_compact" 0.0;
+			min:120 120;
+			max:120 120;
+			rel1 { relative: 0.41 1.0; to: "bg";offset: 0 -174;}
+			rel2 { relative: 0.60 1.0; to: "bg";offset: 0 -38;}
+			align: 0.5 0.5;
+			image.normal:"toolbar_control_bg.png";
+			color: 250 250 250 255;
+			visible:1;
+		}
+      description {
+        state:"pressed" 0.0;
+        inherit:"default";
+        image.normal:"toolbar_control_bg.png";
+        color: 250 250 250 255;
+        visible:1;
+      }
+		description {
+			state: "pressed_compact" 0.0;
+			inherit: "default_compact";
+			image.normal: "toolbar_control_bg.png";
+			color: 250 250 250 255;
+			visible:1;
+		}
+      description {
+        state:"show";
+        inherit:"default";
+        visible:1;
+      }
+		description {
+			state:"show_compact";
+			inherit:"default_compact";
+			visible:1;
+      }
+
+    }//end record_icon_bg
+    part {
+      name:"record_icon_swallow";
+      type:SWALLOW;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+        rel1 {
+          relative:0.0 0.0;
+          to:"record_icon_bg";
+        }
+        rel2 {
+          relative:1.0 1.0;
+          to:"record_icon_bg";
+        }
+      	color: 0 0 0 0;
+        visible:1;
+      }
+      }
+    part {
+      name:"record_icon";
+      type:IMAGE;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+        min:120 120;
+        max:120 120;
+        rel1 {
+          relative:0.0 0.0;
+          to:"record_icon_bg";
+        }
+        rel2 {
+          relative:1.0 1.0;
+          to:"record_icon_bg";
+        }
+
+        align:0.5 0.5;
+        image.normal:"toolbar_icon_rec.png";
+        color: 255 25 25 255;
+        visible:1;
+      }
+		description {
+			state:"default_compact" 0.0;
+			min:120 120;
+			max:120 120;
+			rel1 { relative: 0.0 0.0; to: "record_icon_bg";}
+			rel2 { relative: 1.0 1.0; to:"record_icon_bg";}
+			align:0.5 0.5;
+			image.normal:"toolbar_icon_rec.png";
+        	color: 255 25 25 255;
+			visible:1;
+		}
+      description {
+        state:"show";
+        inherit:"default";
+        min:120 120;
+        max:120 120;
+        image.normal:"toolbar_control_stop.png";
+        color: 255 25 25 255;
+      }
+		description {
+			state:"show_compact";
+			inherit:"default_compact";
+			min:120 120;
+			max:120 120;
+			image.normal:"toolbar_control_stop.png";
+        	color: 255 25 25 255;
+		}
+      description {
+        state:"stop";
+        inherit:"default";
+        image.normal:"toolbar_control_stop.png";
+        color: 255 25 25 255;
+      }
+		description {
+			state: "stop_compact";
+			inherit: "default_compact";
+			image.normal:"toolbar_control_stop.png";
+        	color: 255 25 25 255;
+		}
+    }//end record_icon
+  }//end parts
+
+  script {
+      public playToggle;
+      public stopToggle;
+      public stopTitleRecording;
+      public t;
+      public showTimer;
+	public iscompactview;
+      public init()
+      {
+        set_int(playToggle,0);
+        set_int(showTimer,0);
+        set_int(stopToggle,0);
+	set_int(stopTitleRecording,0);
+      }
+	public setcompactview()
+	{
+		set_int(iscompactview,1);
+	}
+	public setfullview()
+	{
+		set_int(iscompactview,0);
+	}
+  }
+  programs {
+    program {
+      name:"init";
+      signal:"load";
+      source:"";
+      script {
+        init();
+      }
+    }
+	program {
+		name:"setcompactview";
+		signal:"compact_view";
+		source:"prog";
+		script {
+			setcompactview();
+			set_state(PART:"recorder_title","default_compact",0.0);
+			set_state(PART:"recorder_timer","default_compact",0.0);
+			set_state(PART:"record_icon_bg","default_compact",0.0);
+			set_state(PART:"record_icon","default_compact",0.0);
+		}
+	}
+	program {
+		name:"setfullview";
+		signal:"full_view";
+		source:"prog";
+		script {
+			setfullview();
+			set_state(PART:"recorder_title","default",0.0);
+			set_state(PART:"recorder_timer","default",0.0);
+			set_state(PART:"record_icon_bg","default",0.0);
+			set_state(PART:"record_icon","default",0.0);
+		}
+	}
+
+    program {
+      name:"click_on_record_down";
+      signal:"mouse,down,1";
+      source:"record_icon_bg";
+      script {
+        new str[70];
+        snprintf(str,sizeof(str),"%d %d",get_int(stopToggle),get_int(playToggle));
+        //set_text(PART:"recorder_timer",str);
+        if(get_int(stopToggle) == 0)
+        {
+			if(get_int(iscompactview) == 0)
+			{
+				set_state(PART:"recorder_title","recording",0.0);
+				set_state(PART:"record_icon_bg","pressed",0.0);
+				set_state(PART:"record_icon","show",0.0);
+			}
+			else
+			{
+				set_state(PART:"recorder_title","recording_compact",0.0);
+				set_state(PART:"record_icon_bg","pressed_compact",0.0);
+				set_state(PART:"record_icon","show_compact",0.0);
+			}
+          set_int(stopToggle,1);
+          run_program(PROGRAM:"emit_play_signal");
+        }
+      }
+    }//end click_on_record "mouse,down,1"
+
+    program {
+      name:"click_on_record_up";
+      signal:"mouse,up,1";
+      source:"record_icon_bg";
+      script {
+        new str[70];
+        snprintf(str,sizeof(str),"%d %d",get_int(stopToggle),get_int(playToggle));
+        //set_text(PART:"recorder_timer",str);
+        if(get_int(stopToggle) == 1)
+        {
+			if(get_int(iscompactview) == 0)
+			{
+				set_state(PART:"recorder_title","default",0.0);
+				set_state(PART:"record_icon_bg","default",0.0);
+				set_state(PART:"record_icon","default",0.0);
+			}
+			else
+			{
+				set_state(PART:"recorder_title","default_compact",0.0);
+				set_state(PART:"record_icon_bg","default_compact",0.0);
+				set_state(PART:"record_icon","default_compact",0.0);
+			}
+          set_int(stopToggle,0);
+          run_program(PROGRAM:"emit_stop_signal");
+        }
+
+      }
+    }//end click_on_record "mouse,up,1"
+
+    program {
+      name:"release_on_record";
+      signal:"mouse,down,1";
+      source:"record_icon_bg";
+      script {
+		if(get_int(iscompactview) == 0)
+		{
+			set_state(PART:"record_icon_bg","default",0.0);
+		}
+		else
+		{
+			set_state(PART:"record_icon_bg","default_compact",0.0);
+		}
+      }
+    }//end release_on_record
+
+    program {
+      name:"emit_play_signal";
+      source:"";
+      action:SIGNAL_EMIT "play" "emit_play_signal";
+    }//end emit_play_signal
+
+    program {
+      name:"emit_stop_signal";
+      source:"";
+      action:SIGNAL_EMIT "stop" "emit_stop_signal";
+    }//end emit_stop_signal
+
+    program {
+      name:"emit_cancel_signal";
+      source:"";
+      action:SIGNAL_EMIT "cancel" "emit_cancel_signal";
+    }//end emit_cancel_signal
+
+    program {
+      name:"emit_pause_signal";
+      source:"";
+      action:SIGNAL_EMIT "pause" "emit_pause_signal";
+    }//end emit_pause_signal
+
+  }//end programs
+
+}//end group
+
+group {
+  name:"audio_recorder_wvga";
+  images {
+    image:"bg.png" COMP;
+    image:"bg_pressed.png" COMP;
+    image:"icon_close.png" COMP;
+    image:"icon_pause.png" COMP;
+    image:"icon_play.png" COMP;
+    image:"icon_rec.png" COMP;
+    image:"icon_stop.png" COMP;
+    image:"drawer.png" COMP;
+    image:"voice_attach_bg.png" COMP;
+    image:"toolbar_icon_rec.png" COMP;
+    image:"toolbar_control_stop.png" COMP;
+    image:"toolbar_control_bg.png" COMP;
+  }
+
+  parts {
+    part {
+      name:"bg";
+      type:RECT;
+      description {
+        state:"default" 0.0;
+        rel1 {
+          relative:0.0 0.0;
+
+        }
+        rel2 {
+          relative: 1.0 1.0;
+        }
+        color:0 0 0 0;
+      }
+    }//end bg
+	part {
+      name:"bg_image";
+      type:IMAGE;
+      description {
+        state:"default" 0.0;
+        rel1 {
+          relative:0.0 0.0;
+
+        }
+        rel2 {
+          relative: 1.0 1.0;
+        }
+        image.normal:"voice_attach_bg.png";
+      }
+    }
+    part {
+      name:"recorder_title_bg";
+      type:RECT;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+        rel1 { relative:0.0 0.011; to:"bg";}
+        rel2 { relative: 1.0 0.038;to:"bg";}
+        color:0 0 0 0;
+      }
+    }//end recorder_title
+
+    part {
+      name:"recorder_title";
+      type:TEXT;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+		min: 480 40;
+		rel1 { relative: 0.5 0.0; to:"bg"; offset: 0 40;}
+		rel2 { relative: 0.5 0.0; to:"bg"; offset: 0 40;}
+        color:255 255 255 255;
+        text { font: "Tizen:style=Light";align:0.5 0.5; size: 30; text:"Tap and hold to record"; }
+      }
+		description {
+			state: "default_compact" 0.0;
+			min: 480 40;
+			rel1 { relative: 0.5 0.0; to: "bg"; offset: 0 30;}
+			rel2 { relative: 0.5 0.0; to: "bg"; offset: 0 30;}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 30; text:"Tap and hold to record"; }
+		}
+      description {
+        state:"recording" 0.0;
+        inherit:"default";
+        text { font: "Tizen:style=Light";align:0.5 0.5; size: 30; text:"Recording..."; }
+      }
+		description {
+			state:"recording_compact" 0.0;
+			inherit:"default_compact";
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 30; text:"Recording..."; }
+		}
+    }//end recorder_title
+	part {
+		name:"recorder_timer";
+		type:TEXT;
+		description {
+			state:"default" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.0 0.388; to: "bg";}
+			rel2 { relative: 1.0 0.523; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 90; text:"00 : 00"; }
+		}
+		description {
+			state:"default_compact" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.0 0.176; to: "bg";}
+			rel2 { relative: 1.0 0.567; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 90; text:"00 : 00"; }
+		}
+	}//end recorder_timer
+    part {
+      name:"record_icon_bg";
+      type:IMAGE;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+        min:90 90;
+        max:90 90;
+        rel1 { relative: 0.41 1.0; to: "bg"; offset: 0 -90;}
+        rel2 { relative: 0.60 1.0; to: "bg"; offset: 0 -18;}
+        align:0.5 0.5;
+        image.normal:"toolbar_control_bg.png";
+        color: 250 250 250 255;
+        visible:1;
+      }
+		description {
+			state: "default_compact" 0.0;
+			min:90 90;
+			max:90 90;
+			rel1 { relative: 0.41 1.0; to: "bg"; offset: 0 -90;}
+			rel2 { relative: 0.60 1.0; to: "bg"; offset: 0 -18;}
+			align: 0.5 0.5;
+			image.normal:"toolbar_control_bg.png";
+			color: 250 250 250 255;
+			visible:1;
+		}
+      description {
+        state:"pressed" 0.0;
+        inherit:"default";
+        image.normal:"toolbar_control_bg.png";
+        color: 250 250 250 255;
+      }
+		description {
+			state: "pressed_compact" 0.0;
+			inherit: "default_compact";
+			image.normal: "toolbar_control_bg.png";
+			color: 250 250 250 255;
+		}
+      description {
+        state:"show";
+        inherit:"default";
+        visible:1;
+      }
+		description {
+			state:"show_compact";
+			inherit:"default_compact";
+			visible:1;
+      }
+
+    }//end record_icon_bg
+	part {
+      name:"record_icon_swallow";
+      type:SWALLOW;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+        rel1 {
+          relative:0.0 0.0;
+          to:"record_icon_bg";
+        }
+        rel2 {
+          relative:1.0 1.0;
+          to:"record_icon_bg";
+        }
+      	color: 0 0 0 0;
+        visible:1;
+      }
+      }
+    part {
+      name:"record_icon";
+      type:IMAGE;
+      mouse_events:1;
+      repeat_events:1;
+      description {
+        state:"default" 0.0;
+        min:90 90;
+        max:90 90;
+        rel1 {
+          relative:0.0 0.0;
+          to:"record_icon_bg";
+        }
+        rel2 {
+          relative:1.0 1.0;
+          to:"record_icon_bg";
+        }
+
+        align:0.5 0.5;
+        image.normal:"toolbar_icon_rec.png";
+        color: 255 25 25 255;
+        visible:1;
+      }
+		description {
+			state:"default_compact" 0.0;
+			min:90 90;
+			max:90 90;
+			rel1 { relative: 0.0 0.0; to: "record_icon_bg";}
+			rel2 { relative: 1.0 1.0; to:"record_icon_bg";}
+			align:0.5 0.5;
+			image.normal:"toolbar_icon_rec.png";
+        	color: 255 25 25 255;
+			visible:1;
+		}
+      description {
+        state:"show";
+        inherit:"default";
+        min:90 90;
+        max:90 90;
+        image.normal:"toolbar_control_stop.png";
+        color: 255 25 25 255;
+      }
+		description {
+			state:"show_compact";
+			inherit:"default_compact";
+			min:90 90;
+			max:90 90;
+			image.normal:"toolbar_control_stop.png";
+			color: 255 25 25 255;
+		}
+      description {
+        state:"stop";
+        inherit:"default";
+        image.normal:"toolbar_control_stop.png";
+        color: 255 25 25 255;
+      }
+		description {
+			state: "stop_compact";
+			inherit: "default_compact";
+			image.normal:"toolbar_control_stop.png";
+			color: 255 25 25 255;
+		}
+    }//end record_icon
+  }//end parts
+
+  script {
+      public playToggle;
+      public stopToggle;
+      public stopTitleRecording;
+      public t;
+      public showTimer;
+	public iscompactview;
+      public init()
+      {
+        set_int(playToggle,0);
+        set_int(showTimer,0);
+        set_int(stopToggle,0);
+	set_int(stopTitleRecording,0);
+      }
+	public setcompactview()
+	{
+		set_int(iscompactview,1);
+	}
+	public setfullview()
+	{
+		set_int(iscompactview,0);
+	}
+  }
+  programs {
+    program {
+      name:"init";
+      signal:"load";
+      source:"";
+      script {
+        init();
+      }
+    }
+	program {
+		name:"setcompactview";
+		signal:"compact_view";
+		source:"prog";
+		script {
+			setcompactview();
+			set_state(PART:"recorder_title","default_compact",0.0);
+			set_state(PART:"recorder_timer","default_compact",0.0);
+			set_state(PART:"record_icon_bg","default_compact",0.0);
+			set_state(PART:"record_icon","default_compact",0.0);
+		}
+	}
+	program {
+		name:"setfullview";
+		signal:"full_view";
+		source:"prog";
+		script {
+			setfullview();
+			set_state(PART:"recorder_title","default",0.0);
+			set_state(PART:"recorder_timer","default",0.0);
+			set_state(PART:"record_icon_bg","default",0.0);
+			set_state(PART:"record_icon","default",0.0);
+		}
+	}
+
+    program {
+      name:"click_on_record_down";
+      signal:"mouse,down,1";
+      source:"record_icon_bg";
+      script {
+        new str[70];
+        snprintf(str,sizeof(str),"%d %d",get_int(stopToggle),get_int(playToggle));
+        //set_text(PART:"recorder_timer",str);
+        if(get_int(stopToggle) == 0)
+        {
+			if(get_int(iscompactview) == 0)
+			{
+				set_state(PART:"recorder_title","recording",0.0);
+				set_state(PART:"record_icon_bg","pressed",0.0);
+				set_state(PART:"record_icon","show",0.0);
+			}
+			else
+			{
+				set_state(PART:"recorder_title","recording_compact",0.0);
+				set_state(PART:"record_icon_bg","pressed_compact",0.0);
+				set_state(PART:"record_icon","show_compact",0.0);
+			}
+          set_int(stopToggle,1);
+          run_program(PROGRAM:"emit_play_signal");
+        }
+      }
+    }//end click_on_record "mouse,down,1"
+
+    program {
+      name:"click_on_record_up";
+      signal:"mouse,up,1";
+      source:"record_icon_bg";
+      script {
+        new str[70];
+        snprintf(str,sizeof(str),"%d %d",get_int(stopToggle),get_int(playToggle));
+        //set_text(PART:"recorder_timer",str);
+        if(get_int(stopToggle) == 1)
+        {
+			if(get_int(iscompactview) == 0)
+			{
+				set_state(PART:"recorder_title","default",0.0);
+				set_state(PART:"record_icon_bg","default",0.0);
+				set_state(PART:"record_icon","default",0.0);
+			}
+			else
+			{
+				set_state(PART:"recorder_title","default_compact",0.0);
+				set_state(PART:"record_icon_bg","default_compact",0.0);
+				set_state(PART:"record_icon","default_compact",0.0);
+			}
+          set_int(stopToggle,0);
+          run_program(PROGRAM:"emit_stop_signal");
+        }
+
+      }
+    }//end click_on_record "mouse,up,1"
+
+    program {
+      name:"release_on_record";
+      signal:"mouse,down,1";
+      source:"record_icon_bg";
+      script {
+		if(get_int(iscompactview) == 0)
+		{
+			set_state(PART:"record_icon_bg","default",0.0);
+		}
+		else
+		{
+			set_state(PART:"record_icon_bg","default_compact",0.0);
+		}
+      }
+    }//end release_on_record
+
+    program {
+      name:"emit_play_signal";
+      source:"";
+      action:SIGNAL_EMIT "play" "emit_play_signal";
+    }//end emit_play_signal
+
+    program {
+      name:"emit_stop_signal";
+      source:"";
+      action:SIGNAL_EMIT "stop" "emit_stop_signal";
+    }//end emit_stop_signal
+
+    program {
+      name:"emit_cancel_signal";
+      source:"";
+      action:SIGNAL_EMIT "cancel" "emit_cancel_signal";
+    }//end emit_cancel_signal
+
+    program {
+      name:"emit_pause_signal";
+      source:"";
+      action:SIGNAL_EMIT "pause" "emit_pause_signal";
+    }//end emit_pause_signal
+
+  }//end programs
+
+}//end group
+
+}

@@ -1,0 +1,9 @@
+msgid "IDS_VR_BODY_RECORDING"
+msgstr "Upptaka í gangi"
+
+msgid "IDS_VR_TPOP_UNABLE_TO_SAVE_RECORDING_RECORDING_TOO_SHORT"
+msgstr "Ekki er hægt að vista upptökuna. Hún er of stutt."
+
+msgid "IDS_ST_BUTTON_TAP_AND_HOLD_TO_RECORD_ABB"
+msgstr "Haltu til að taka upp"
+

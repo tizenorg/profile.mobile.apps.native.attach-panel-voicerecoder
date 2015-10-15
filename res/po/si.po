@@ -1,0 +1,9 @@
+msgid "IDS_VR_BODY_RECORDING"
+msgstr "පටිගත කරමින්..."
+
+msgid "IDS_VR_TPOP_UNABLE_TO_SAVE_RECORDING_RECORDING_TOO_SHORT"
+msgstr "පටිගතකරණය සුරැකිය නොහැක. පටිගතකරණය කෙටි වැඩියි."
+
+msgid "IDS_ST_BUTTON_TAP_AND_HOLD_TO_RECORD_ABB"
+msgstr "පටිගත කිරීමට තට්ටු කර අල්ලාගෙන සිටි."
+
