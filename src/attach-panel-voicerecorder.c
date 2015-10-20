@@ -95,6 +95,7 @@ static Evas_Object *__attachPanelVoiceRecorder_create_fullview(Evas_Object *pare
 	return base;
 }
 
+#if 0
 static Evas_Object *__attachPanelVoiceRecorder_create_frameview(Evas_Object *parent, struct ug_data *ugd)
 {
 	Evas_Object *base = NULL;
@@ -108,12 +109,12 @@ static Evas_Object *__attachPanelVoiceRecorder_create_frameview(Evas_Object *par
 
 	return base;
 }
+#endif
 
 static void *__attachPanelVoiceRecorder_on_create(ui_gadget_h ug, enum ug_mode mode, app_control_h service,
 		       void *priv)
 {
 	Evas_Object *parent = NULL;
-	Evas_Object *content = NULL;
 	struct ug_data *ugd = NULL;
 	char *operation = NULL;
 
@@ -253,6 +254,7 @@ static void __attachPanelVoiceRecorder_on_event(ui_gadget_h ug, enum ug_event ev
 	}
 }
 
+#if 0
 static void __attachPanelVoiceRecorder_on_key_event(ui_gadget_h ug, enum ug_key_event event,
 			 app_control_h service, void *priv)
 {
@@ -267,6 +269,7 @@ static void __attachPanelVoiceRecorder_on_key_event(ui_gadget_h ug, enum ug_key_
 		break;
 	}
 }
+#endif
 
 static void __attachPanelVoiceRecorder_on_destroying(ui_gadget_h ug, app_control_h service, void *priv)
 {
@@ -301,7 +304,6 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 
 UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 {
-	struct ug_data *ugd;
 
 	if (!ops)
 		return;

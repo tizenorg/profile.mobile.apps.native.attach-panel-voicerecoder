@@ -44,17 +44,20 @@
 
 static audio_recorder_view *viewhandle = NULL;
 
+#if 0
 static void _codec_set(audio_recorder_view *view, recorder_audio_codec_e codec);
+static void _get_supported_codec_list(audio_recorder_view *view);
+static void _recorder_preproc_set(audio_recorder_view *view, bool preproc);
 static void _preproc_set(audio_recorder_view *view, bool preproc);
+static void _recorder_pause(audio_recorder_view *view);
+static void _recorder_cancel(audio_recorder_view *view);
+static void _on_recorder_audio_stream_cb(void* stream, int size, audio_sample_type_e format, int channel, unsigned int timestamp, void *user_data);
+#endif
+
 static void _recorder_create(audio_recorder_view *view);
 static void _recorder_start(audio_recorder_view *view);
-static void _recorder_pause(audio_recorder_view *view);
 static void _recorder_stop(audio_recorder_view *view);
-static void _recorder_cancel(audio_recorder_view *view);
-static void _recorder_preproc_set(audio_recorder_view *view, bool preproc);
 static void _recorder_apply_settings(audio_recorder_view *view);
-static void _get_supported_codec_list(audio_recorder_view *view);
-static void _on_recorder_audio_stream_cb(void* stream, int size, audio_sample_type_e format, int channel, unsigned int timestamp, void *user_data);
 static void _on_recording_status_cb(unsigned long long elapsed_time, unsigned long long file_size, void *user_data);
 static void _on_recording_limit_reached_cb(recorder_recording_limit_type_e type, void *user_data);
 static bool _main_file_register(const char *filename);
@@ -104,8 +107,6 @@ static void _on_start_btn_clicked_cb(void *data, Evas_Object *obj,
 {
     LOGD("Enter _on_start_btn_clicked_cb");
     RETM_IF(!data, "data is NULL");
-
-    audio_recorder_view *view = (audio_recorder_view *)data;
 }
 
 static void _on_stop_btn_pressed_cb(void *data, Evas_Object *obj,
@@ -141,6 +142,7 @@ static void _on_stop_btn_clicked_cb(void *data, Evas_Object *obj,
     }
 }
 
+#if 0
 static void _on_pause_pressed_cb(void *data, Evas_Object *obj,
         const char *emission, const char *source)
 {
@@ -151,7 +153,9 @@ static void _on_pause_pressed_cb(void *data, Evas_Object *obj,
 
     _recorder_pause(view);
 }
+#endif
 
+#if 0
 static void _on_cancel_btn_pressed_cb(void *data, Evas_Object *obj,
         const char *emission, const char *source)
 {
@@ -160,6 +164,7 @@ static void _on_cancel_btn_pressed_cb(void *data, Evas_Object *obj,
 
     _recorder_cancel(view);
 }
+#endif
 
 static void _recorder_create(audio_recorder_view *view)
 {
@@ -177,6 +182,7 @@ static void _recorder_create(audio_recorder_view *view)
     }
 }
 
+#if 0
 static void _get_supported_codec_list(audio_recorder_view *view)
 {
     RETM_IF(!view, "view is NULL");
@@ -185,7 +191,9 @@ static void _get_supported_codec_list(audio_recorder_view *view)
         view->codec_list = audio_recorder_get_supported_encoder(view->recorder, &view->codec_list_len);
     }
 }
+#endif
 
+#if 0
 static void _codec_set(audio_recorder_view *view, recorder_audio_codec_e codec)
 {
     RETM_IF(!view, "view is NULL");
@@ -193,11 +201,14 @@ static void _codec_set(audio_recorder_view *view, recorder_audio_codec_e codec)
     view->codec = codec;
     view->file_format = audio_recorder_get_file_format_by_codec(view->recorder, codec);
 }
+#endif
 
+#if 0
 static void _preproc_set(audio_recorder_view *view, bool preproc)
 {
     audio_recorder_save_preprocessing(preproc);
 }
+#endif
 
 static void _recorder_apply_settings(audio_recorder_view *view)
 {
@@ -221,6 +232,7 @@ static void _recorder_apply_settings(audio_recorder_view *view)
     }
 }
 
+#if 0
 static void _recorder_preproc_set(audio_recorder_view *view, bool preproc)
 {
     if (preproc) {
@@ -244,6 +256,7 @@ static void _recorder_preproc_set(audio_recorder_view *view, bool preproc)
         recorder_unset_audio_stream_cb(view->recorder);
     }
 }
+#endif
 
 static void _recorder_destroy(audio_recorder_view *view)
 {
@@ -391,11 +404,12 @@ static void _recorder_stop(audio_recorder_view *view)
 		}
 		/*ug_destroy_me(view->ug_handle);*/
 	} else {
-            VR_DEBUG("Failed to create app control\n");
+            LOGD("Failed to create app control\n");
 	}
     }
 }
 
+#if 0
 static void _recorder_pause(audio_recorder_view *view)
 {
     LOGD(" Enter _recorder_pause");
@@ -423,7 +437,9 @@ static void _recorder_pause(audio_recorder_view *view)
         recorder_pause(view->recorder);
     }
 }
+#endif
 
+#if 0
 static void _recorder_cancel(audio_recorder_view *view)
 {
 	recorder_state_e rec_state = RECORDER_STATE_NONE;
@@ -436,6 +452,7 @@ static void _recorder_cancel(audio_recorder_view *view)
 	    elm_object_domain_translatable_part_text_set(view->layout, "recorder_title", domain, STR_RECORDER_TITLE);
 	}
 }
+#endif
 
 /*static void _destroy(audio_recorder_view *view)
 {
@@ -466,10 +483,14 @@ void _main_layout_add(Evas_Object *layout, ui_gadget_h ug_handle, app_control_h 
     view->service = service;
     view->limitsize = 0;
     int ret = 0;
-    ret = app_control_get_extra_data(service, "http://tizen.org/appcontrol/data/total_size", &(view->limitsize));
+    char *size_limit = NULL;
+    ret = app_control_get_extra_data(service, "http://tizen.org/appcontrol/data/total_size", &(size_limit));
     if (ret != APP_CONTROL_ERROR_NONE) {
 	LOGD("Failed to get total_size information!!");
+    } else {
+    	view->limitsize = atoi(size_limit);
     }
+
     LOGD("Size limit = %llu", view->limitsize);
 
     _recorder_create(view);
@@ -505,10 +526,9 @@ void _main_layout_add(Evas_Object *layout, ui_gadget_h ug_handle, app_control_h 
     elm_gesture_layer_attach(view->gesture_long_tap, rec_btn);
 
     evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
-
-    return view->layout;
 }
 
+#if 0
 static void _on_recorder_audio_stream_cb(void* stream, int size, audio_sample_type_e format, int channel, unsigned int timestamp, void *user_data)
 {
     audio_recorder_view *view = user_data;
@@ -530,6 +550,7 @@ static void _on_recorder_audio_stream_cb(void* stream, int size, audio_sample_ty
         }
     }
 }
+#endif
 
 static void _on_recording_status_cb(unsigned long long elapsed_time, unsigned long long file_size, void *user_data)
 {
