@@ -21,6 +21,8 @@
 
 #include <app.h>
 #include <app_preference.h>
+#include <assert.h>
+#include <stdlib.h>
 
 typedef struct
 {

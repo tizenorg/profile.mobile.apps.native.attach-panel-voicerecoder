@@ -20,6 +20,7 @@
 
 #include "logger.h"
 #include <app.h>
+#include <stdio.h>
 
 #define MAX_LENGTH_PATH 1024
 
