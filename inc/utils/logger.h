@@ -27,29 +27,29 @@
 #define ERR(fmt, arg...) dlog_print(DLOG_ERROR, LOG_TAG, fmt,  ##arg)
 
 #define WARN_IF(expr, fmt, arg...) \
-{ \
-    if (expr) \
-    { \
-        ERR(fmt, ##arg); \
-    } \
-}
+	{ \
+		if (expr) \
+		{ \
+			ERR(fmt, ##arg); \
+		} \
+	}
 
 #define RETM_IF(expr, fmt, arg...) \
-{ \
-    if (expr) \
-    { \
-        ERR(fmt, ##arg); \
-        return; \
-    } \
-}
+	{ \
+		if (expr) \
+		{ \
+			ERR(fmt, ##arg); \
+			return; \
+		} \
+	}
 
 #define RETVM_IF(expr, val, fmt, arg...) \
-{ \
-    if (expr) \
-    { \
-        ERR(fmt, ##arg); \
-        return (val); \
-    } \
-}
+	{ \
+		if (expr) \
+		{ \
+			ERR(fmt, ##arg); \
+			return (val); \
+		} \
+	}
 
 #endif /* __LOGGER_H__ */

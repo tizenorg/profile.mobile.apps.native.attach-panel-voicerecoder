@@ -31,30 +31,29 @@
 #define FALSE 0
 #endif
 
-typedef enum _audio_recorder_view_type{
+typedef enum _audio_recorder_view_type {
 	AUDIO_RECORDER_FULL_VIEW,
 	AUDIO_RECORDER_COMPACT_VIEW,
-}AudioRecorderViewType;
+} AudioRecorderViewType;
 
-struct _audio_recorder_view
-{
-    Evas_Object *layout;
-    Evas_Object *gesture_long_tap;
-    Elm_Object_Item *settings_item;
-    recorder_h recorder;
-    recorder_audio_codec_e *codec_list;
-    int codec_list_len;
-    char file_path[PATH_MAX];
-    char file_name[PATH_MAX];
-    recorder_audio_codec_e codec;
-    recorder_file_format_e file_format;
-    FILE *preproc_file;
-    ui_gadget_h ug_handle;
-    app_control_h service;
-    int bitrate;
-    int sample_rate;
-    bool is_recording;
-    long long int limitsize;
+struct _audio_recorder_view {
+	Evas_Object *layout;
+	Evas_Object *gesture_long_tap;
+	Elm_Object_Item *settings_item;
+	recorder_h recorder;
+	recorder_audio_codec_e *codec_list;
+	int codec_list_len;
+	char file_path[PATH_MAX];
+	char file_name[PATH_MAX];
+	recorder_audio_codec_e codec;
+	recorder_file_format_e file_format;
+	FILE *preproc_file;
+	ui_gadget_h ug_handle;
+	app_control_h service;
+	int bitrate;
+	int sample_rate;
+	bool is_recording;
+	long long int limitsize;
 };
 
 typedef struct _audio_recorder_view audio_recorder_view;

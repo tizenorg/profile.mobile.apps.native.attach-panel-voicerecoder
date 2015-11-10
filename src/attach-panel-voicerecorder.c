@@ -30,7 +30,7 @@
 struct ug_data *g_ugd;
 
 #ifdef ENABLE_UG_CREATE_CB
-extern int ug_create_cb(void (*create_cb)(char*,char*,char*,void*), void *user_data);
+extern int ug_create_cb(void (*create_cb)(char*, char*, char*, void*), void *user_data);
 #endif
 
 bool __attachPanelVoiceRecorder_get_extra_data_cb(app_control_h service, const char *key, void * user_data);
@@ -86,8 +86,9 @@ static Evas_Object *__attachPanelVoiceRecorder_create_fullview(Evas_Object *pare
 	Evas_Object *base = NULL;
 
 	base = elm_layout_add(parent);
-	if (!base)
+	if (!base) {
 		return NULL;
+	}
 
 	elm_layout_theme_set(base, "layout", "application", "default");
 	elm_win_indicator_mode_set(parent, ELM_WIN_INDICATOR_SHOW);
@@ -101,8 +102,9 @@ static Evas_Object *__attachPanelVoiceRecorder_create_frameview(Evas_Object *par
 	Evas_Object *base = NULL;
 
 	base = elm_layout_add(parent);
-	if (!base)
+	if (!base) {
 		return NULL;
+	}
 
 	elm_layout_theme_set(base, "standard", "window", "integration");
 	edje_object_signal_emit(_EDJ(base), "elm,state,show,content", "elm");
@@ -112,14 +114,15 @@ static Evas_Object *__attachPanelVoiceRecorder_create_frameview(Evas_Object *par
 #endif
 
 static void *__attachPanelVoiceRecorder_on_create(ui_gadget_h ug, enum ug_mode mode, app_control_h service,
-		       void *priv)
+        void *priv)
 {
 	Evas_Object *parent = NULL;
 	struct ug_data *ugd = NULL;
 	char *operation = NULL;
 
-	if (!ug || !priv)
+	if (!ug || !priv) {
 		return NULL;
+	}
 
 	LOGD("__attachPanelVoiceRecorder_on_create start");
 	bindtextdomain("attach-panel-voicerecorder", "/usr/ug/res/locale");
@@ -143,8 +146,9 @@ static void *__attachPanelVoiceRecorder_on_create(ui_gadget_h ug, enum ug_mode m
 	app_control_foreach_extra_data(service, __attachPanelVoiceRecorder_get_extra_data_cb, NULL);
 
 	parent = (Evas_Object *)ug_get_parent_layout(ug);
-	if (!parent)
+	if (!parent) {
 		return NULL;
+	}
 
 	char *contact_id = NULL;
 	app_control_get_extra_data(service, "__CALLER_PANEL__", &contact_id);
@@ -173,7 +177,7 @@ static void __attachPanelVoiceRecorder_on_start(ui_gadget_h ug, app_control_h se
 	int status;
 	int a = 1;
 
-	for (i=0; i<10; i++) {
+	for (i = 0; i < 10; i++) {
 		thr_id = pthread_create(&p_thread[i], NULL, __attachPanelVoiceRecorder_start_t_func, (void*)&a);
 		if (thr_id < 0) {
 			perror("thread create error: ");
@@ -186,6 +190,7 @@ static void __attachPanelVoiceRecorder_on_start(ui_gadget_h ug, app_control_h se
 
 static void __attachPanelVoiceRecorder_on_pause(ui_gadget_h ug, app_control_h service, void *priv)
 {
+	LOGD("%s : called\n", __func__);
 }
 
 static void __attachPanelVoiceRecorder_on_resume(ui_gadget_h ug, app_control_h service, void *priv)
@@ -197,8 +202,9 @@ static void __attachPanelVoiceRecorder_on_destroy(ui_gadget_h ug, app_control_h 
 {
 	struct ug_data *ugd;
 	LOGD("%s : called\n", __func__);
-	if (!ug || !priv)
+	if (!ug || !priv) {
 		return;
+	}
 
 	ugd = priv;
 	evas_object_del(ugd->base);
@@ -206,7 +212,7 @@ static void __attachPanelVoiceRecorder_on_destroy(ui_gadget_h ug, app_control_h 
 }
 
 static void __attachPanelVoiceRecorder_on_message(ui_gadget_h ug, app_control_h msg, app_control_h service,
-		      void *priv)
+        void *priv)
 {
 	if (!ug || !priv) {
 		LOGD("Invalid ug or priv");
@@ -220,7 +226,7 @@ static void __attachPanelVoiceRecorder_on_message(ui_gadget_h ug, app_control_h 
 		LOGD("called by attach panel ");
 		app_control_get_extra_data(msg, APP_CONTROL_DATA_SELECTION_MODE, &display_mode);
 		if (display_mode) {
-			if(!strcmp(display_mode, "single")) {
+			if (!strcmp(display_mode, "single")) {
 				//change to compact view
 				LOGD("compact view ");
 				_audio_recorder_view_set_view_layout(AUDIO_RECORDER_COMPACT_VIEW);
@@ -236,7 +242,7 @@ static void __attachPanelVoiceRecorder_on_message(ui_gadget_h ug, app_control_h 
 }
 
 static void __attachPanelVoiceRecorder_on_event(ui_gadget_h ug, enum ug_event event, app_control_h service,
-		    void *priv)
+        void *priv)
 {
 	/*int degree = -1;*/
 
@@ -256,10 +262,11 @@ static void __attachPanelVoiceRecorder_on_event(ui_gadget_h ug, enum ug_event ev
 
 #if 0
 static void __attachPanelVoiceRecorder_on_key_event(ui_gadget_h ug, enum ug_key_event event,
-			 app_control_h service, void *priv)
+        app_control_h service, void *priv)
 {
-	if (!ug)
+	if (!ug) {
 		return;
+	}
 
 	switch (event) {
 	case UG_KEY_EVENT_END:
@@ -281,12 +288,14 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 {
 	struct ug_data *ugd;
 
-	if (!ops)
+	if (!ops) {
 		return -1;
+	}
 
 	ugd = calloc(1, sizeof(struct ug_data));
-	if (!ugd)
+	if (!ugd) {
 		return -1;
+	}
 
 	ops->create = __attachPanelVoiceRecorder_on_create;
 	ops->start = __attachPanelVoiceRecorder_on_start;
@@ -304,8 +313,9 @@ UG_MODULE_API int UG_MODULE_INIT(struct ug_module_ops *ops)
 
 UG_MODULE_API void UG_MODULE_EXIT(struct ug_module_ops *ops)
 {
-	if (!ops)
+	if (!ops) {
 		return;
+	}
 
 	/*struct ug_data *ugd;
 	ugd = ops->priv;

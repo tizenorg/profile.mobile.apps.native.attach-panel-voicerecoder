@@ -66,16 +66,16 @@ static inline const char *get_resource_path(const char * file_path);
 
 static inline const char *get_resource_path(const char *file_path)
 {
-    static char absolute_path[MAX_LENGTH_PATH] = {'\0'};
+	static char absolute_path[MAX_LENGTH_PATH] = {'\0'};
 
-    static char *res_path_buff = NULL;
-    if (res_path_buff == NULL) {
-        res_path_buff = app_get_resource_path();
-    }
+	static char *res_path_buff = NULL;
+	if (res_path_buff == NULL) {
+		res_path_buff = app_get_resource_path();
+	}
 
-    snprintf(absolute_path, MAX_LENGTH_PATH, "%s%s", res_path_buff, file_path);
+	snprintf(absolute_path, MAX_LENGTH_PATH, "%s%s", res_path_buff, file_path);
 
-    return absolute_path;
+	return absolute_path;
 }
 
 #endif /* CONFIG_H_ */

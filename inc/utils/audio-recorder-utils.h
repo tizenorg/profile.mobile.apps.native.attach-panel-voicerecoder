@@ -23,11 +23,10 @@
 /**
  * @brief Enumerations for audio recording quality
  */
-typedef enum
-{
-    AQ_LOW = 0,
-    AQ_MEDIUM,
-    AQ_HIGH
+typedef enum {
+	AQ_LOW = 0,
+	AQ_MEDIUM,
+	AQ_HIGH
 } audio_recording_quality_e;
 
 /**
