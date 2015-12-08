@@ -1,7 +1,3 @@
-%define _appdir	%{_prefix}/apps
-%define _ugdir	%{_prefix}/ug
-%define _datadir %{_prefix}/share
-%define _sharedir /opt/usr/media/.iv
 Name:       attach-panel-voicerecorder
 Summary:    voicerecorder UX
 Version:    0.1.0
@@ -28,6 +24,7 @@ BuildRequires: pkgconfig(capi-media-recorder)
 BuildRequires: pkgconfig(capi-appfw-application)
 BuildRequires: pkgconfig(ui-gadget-1)
 BuildRequires: pkgconfig(capi-content-media-content)
+BuildRequires: pkgconfig(libtzplatform-config)
 
 %description
 Description: voicerecorder UG
@@ -36,6 +33,8 @@ Description: voicerecorder UG
 %setup -q
 
 %build
+
+%define _app_license_dir          %{TZ_SYS_SHARE}/license
 
 %if 0%{?tizen_build_binary_release_type_eng}
 export CFLAGS="$CFLAGS -DTIZEN_ENGINEER_MODE"
@@ -47,34 +46,31 @@ export FFLAGS="$FFLAGS -DTIZEN_ENGINEER_MODE"
 CXXFLAGS+=" -D_ARCH_ARM_ -mfpu=neon"
 %endif
 
-%cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} -DCMAKE_DATA_DIR=%{_datadir} -DARCH=%{ARCH}
+%cmake . -DCMAKE_INSTALL_PREFIX=%{TZ_SYS_RO_UG} \
+	-DARCH=%{ARCH} \
+	-DTZ_SYS_RO_PACKAGES=%{TZ_SYS_RO_PACKAGES}
 make %{?jobs:-j%jobs}
 
 %install
 rm -rf %{buildroot}
-if [ ! -d %{buildroot}/opt/usr/apps/attach-panel-voicerecorder/data ]
-then
-        mkdir -p %{buildroot}/opt/usr/apps/attach-panel-voicerecorder/data
-fi
 
 %make_install
 
-mkdir -p %{buildroot}/usr/share/license
-mkdir -p %{buildroot}%{_sharedir}
-cp LICENSE %{buildroot}/usr/share/license/attach-panel-voicerecorder
+mkdir -p %{buildroot}%{_app_license_dir}
+cp LICENSE %{buildroot}%{_app_license_dir}/attach-panel-voicerecorder
 
 %post
-mkdir -p %{_prefix}/apps/%{name}/bin/
-ln -sf %{_prefix}/bin/ug-client %{_prefix}/apps/%{name}/bin/%{name}
+mkdir -p /usr/ug/bin/
+ln -sf %{_prefix}/bin/ug-client %{TZ_SYS_RO_UG}/bin/%{name}
 %postun
 
 %files
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
-%{_appdir}/%{name}/lib/ug/libattach-panel-voicerecorder.so*
-%{_prefix}/ug/res/edje/attach-panel-voicerecorder/*
-%{_prefix}/ug/res/images/attach-panel-voicerecorder/*
-%{_prefix}/ug/res/locale/*
-%{_datadir}/packages/attach-panel-voicerecorder.xml
-%{_datadir}/license/attach-panel-voicerecorder
+%{TZ_SYS_RO_UG}/lib/libattach-panel-voicerecorder.so*
+%{TZ_SYS_RO_UG}/res/edje/attach-panel-voicerecorder/*
+%{TZ_SYS_RO_UG}/res/images/attach-panel-voicerecorder/*
+%{TZ_SYS_RO_UG}/res/locale/*
+%{TZ_SYS_RO_PACKAGES}/attach-panel-voicerecorder.xml
+%{TZ_SYS_SHARE}/license/attach-panel-voicerecorder
 
