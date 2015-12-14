@@ -15,44 +15,36 @@
 *
 */
 
-#include "utils/config.h"
-#include "utils/audio-recorder-utils.h"
-#include "view/audio-recorder-view.h"
 #include <efl_extension.h>
-
 #include <assert.h>
 #include <app_control.h>
 #include <media_content.h>
+#include <tzplatform_config.h>
+
+#include "utils/config.h"
+#include "utils/audio-recorder-utils.h"
+#include "view/audio-recorder-view.h"
 
 #define MAX_LABEL_LEN 256
 #define MAX_TIME 1200
 #define TIMER_UPD_PERIOD 1.0
 #define PREPROC_FILE_BUF_SIZE 512
 
-#define	VR_AUDIO_SOURCE_SAMPLERATE_LOW	     8000
-#define VR_AUDIO_SOURCE_SAMPLERATE_HIGH      44100
-#define VR_AUDIO_SOURCE_FORMAT		         MM_CAMCORDER_AUDIO_FORMAT_PCM_S16_LE
-#define VR_AUDIO_SOURCE_CHANNEL		         1
-#define VR_AUDIO_ENCODER_BITRATE_AMR	     12200
-#define VR_AUDIO_ENCODER_BITRATE_AAC	     64000
-#define VR_AUDIO_TIME_LIMIT		             (100 * 60 * 60)
+#define VR_AUDIO_SOURCE_SAMPLERATE_LOW		8000
+#define VR_AUDIO_SOURCE_SAMPLERATE_HIGH		44100
+#define VR_AUDIO_SOURCE_FORMAT			MM_CAMCORDER_AUDIO_FORMAT_PCM_S16_LE
+#define VR_AUDIO_SOURCE_CHANNEL			1
+#define VR_AUDIO_ENCODER_BITRATE_AMR		12200
+#define VR_AUDIO_ENCODER_BITRATE_AAC		64000
+#define VR_AUDIO_TIME_LIMIT			(100 * 60 * 60)
 #define STR_RECORDER_TITLE			"IDS_ST_BUTTON_TAP_AND_HOLD_TO_RECORD_ABB"
 #define STR_RECORDING				"IDS_VR_BODY_RECORDING"
-#define STR_NOTIFICATION_TEXT		"IDS_VR_TPOP_UNABLE_TO_SAVE_RECORDING_RECORDING_TOO_SHORT"
-#define VR_STR_DOMAIN_SYS "sys_string"
-#define VR_STR_DOMAIN_LOCAL "attach-panel-voicerecorder"
+#define STR_NOTIFICATION_TEXT			"IDS_VR_TPOP_UNABLE_TO_SAVE_RECORDING_RECORDING_TOO_SHORT"
+#define VR_STR_DOMAIN_SYS			"sys_string"
+#define VR_STR_DOMAIN_LOCAL			"attach-panel-voicerecorder"
+#define EDJ_FILE_NAME				"audio_recorder.edj"
 
 static audio_recorder_view *viewhandle = NULL;
-
-#if 0
-static void _codec_set(audio_recorder_view *view, recorder_audio_codec_e codec);
-static void _get_supported_codec_list(audio_recorder_view *view);
-static void _recorder_preproc_set(audio_recorder_view *view, bool preproc);
-static void _preproc_set(audio_recorder_view *view, bool preproc);
-static void _recorder_pause(audio_recorder_view *view);
-static void _recorder_cancel(audio_recorder_view *view);
-static void _on_recorder_audio_stream_cb(void* stream, int size, audio_sample_type_e format, int channel, unsigned int timestamp, void *user_data);
-#endif
 
 static void _recorder_create(audio_recorder_view *view);
 static void _recorder_start(audio_recorder_view *view);
@@ -62,9 +54,6 @@ static void _on_recording_status_cb(unsigned long long elapsed_time, unsigned lo
 static void _on_recording_limit_reached_cb(recorder_recording_limit_type_e type, void *user_data);
 static bool _main_file_register(const char *filename);
 static void _recorder_destroy(audio_recorder_view *view);
-/*static void _on_main_layout_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);*/
-
-#define APP_CONTROL_DATA_FILE_PATH "http://tizen.org/appcontrol/data/file_path"
 
 void _audio_recorder_view_set_data(void *data)
 {
@@ -146,28 +135,6 @@ static void _on_stop_btn_clicked_cb(void *data, Evas_Object *obj,
 	}
 }
 
-#if 0
-static void _on_pause_pressed_cb(void *data, Evas_Object *obj,
-                                 const char *emission, const char *source)
-{
-	LOGD("Enter _on_pause_pressed_cb");
-	RETM_IF(!data, "data is NULL");
-
-	audio_recorder_view *view = (audio_recorder_view *)data;
-
-	_recorder_pause(view);
-}
-
-static void _on_cancel_btn_pressed_cb(void *data, Evas_Object *obj,
-                                      const char *emission, const char *source)
-{
-	RETM_IF(!data, "data is NULL");
-	audio_recorder_view *view = (audio_recorder_view *)data;
-
-	_recorder_cancel(view);
-}
-#endif
-
 static void _recorder_create(audio_recorder_view *view)
 {
 	LOGD("Enter _recorder_create");
@@ -183,30 +150,6 @@ static void _recorder_create(audio_recorder_view *view)
 		LOGD("recorder_create_audiorecorder not successful error code: %d", ret);
 	}
 }
-
-#if 0
-static void _get_supported_codec_list(audio_recorder_view *view)
-{
-	RETM_IF(!view, "view is NULL");
-
-	if (!view->codec_list) {
-		view->codec_list = audio_recorder_get_supported_encoder(view->recorder, &view->codec_list_len);
-	}
-}
-
-static void _codec_set(audio_recorder_view *view, recorder_audio_codec_e codec)
-{
-	RETM_IF(!view, "view is NULL");
-
-	view->codec = codec;
-	view->file_format = audio_recorder_get_file_format_by_codec(view->recorder, codec);
-}
-
-static void _preproc_set(audio_recorder_view *view, bool preproc)
-{
-	audio_recorder_save_preprocessing(preproc);
-}
-#endif
 
 static void _recorder_apply_settings(audio_recorder_view *view)
 {
@@ -229,32 +172,6 @@ static void _recorder_apply_settings(audio_recorder_view *view)
 
 	}
 }
-
-#if 0
-static void _recorder_preproc_set(audio_recorder_view *view, bool preproc)
-{
-	if (preproc) {
-		recorder_audio_codec_e codec = RECORDER_AUDIO_CODEC_DISABLE;
-		recorder_get_audio_encoder(view->recorder, &codec);
-
-		if (codec != RECORDER_AUDIO_CODEC_DISABLE) {
-			if (view->preproc_file) {
-				fclose(view->preproc_file);
-			}
-
-			const char *file_name = audio_recorder_get_preproc_file_name_by_codec(codec);
-			if (file_name) {
-				view->preproc_file = fopen(file_name, "r");
-				assert(view->preproc_file);
-			}
-
-			recorder_set_audio_stream_cb(view->recorder, _on_recorder_audio_stream_cb, view);
-		}
-	} else {
-		recorder_unset_audio_stream_cb(view->recorder);
-	}
-}
-#endif
 
 static void _recorder_destroy(audio_recorder_view *view)
 {
@@ -290,7 +207,11 @@ static void _recorder_start(audio_recorder_view *view)
 	struct tm localtime = {0,};
 	time_t rawtime = time(NULL);
 	char filename[256] = {'\0',};
-	char *data_path = "/opt/usr/media/Music/";
+	const char* music_content_path = tzplatform_getenv(TZ_USER_SOUNDS);
+	if (music_content_path == NULL) {
+		LOGD("music_content_path is NULL");
+		return;
+	}
 
 #if 0
 	/*For MMS*/
@@ -316,7 +237,8 @@ static void _recorder_start(audio_recorder_view *view)
 	}
 #endif
 	/*set file path*/
-	snprintf(view->file_path, PATH_MAX, "%s%s", data_path, filename);
+	snprintf(view->file_path, PATH_MAX, "%s/%s", music_content_path, filename);
+	LOGD("view->file_path = %s", view->file_path);
 	_recorder_apply_settings(view);
 	recorder_prepare(view->recorder);
 	recorder_start(view->recorder);
@@ -407,62 +329,6 @@ static void _recorder_stop(audio_recorder_view *view)
 	}
 }
 
-#if 0
-static void _recorder_pause(audio_recorder_view *view)
-{
-	LOGD(" Enter _recorder_pause");
-
-	if (view->recorder) {
-		int mmf_ret = RECORDER_ERROR_NONE;
-
-		recorder_state_e state_now;
-		mmf_ret = recorder_get_state(view->recorder, &state_now);
-
-		if (mmf_ret != RECORDER_ERROR_NONE) {
-			VR_DEBUG("recorder_get_state Error : %x\n", mmf_ret);
-
-			LOGD("recorder_get_state failed, Recorder can't be paused");
-			return; /* can not pause ! keep old state. */
-		}
-
-		if (state_now == RECORDER_STATE_PAUSED) {
-			VR_DEBUG("\nrecorder already PAUSED\n");
-			LOGD("Recorder can't be paused, already pasued");
-			return; /* already pause ! keep old state. */
-		}
-
-		LOGD("Recorder is paused");
-		recorder_pause(view->recorder);
-	}
-}
-
-static void _recorder_cancel(audio_recorder_view *view)
-{
-	recorder_state_e rec_state = RECORDER_STATE_NONE;
-	recorder_get_state(view->recorder, &rec_state);
-
-	if (rec_state == RECORDER_STATE_PAUSED || rec_state == RECORDER_STATE_RECORDING) {
-		recorder_cancel(view->recorder);
-		elm_object_part_text_set(view->layout, "recorder_timer", "00 : 00");
-		char *domain = VR_STR_DOMAIN_LOCAL;
-		elm_object_domain_translatable_part_text_set(view->layout, "recorder_title", domain, STR_RECORDER_TITLE);
-	}
-}
-#endif
-
-/*static void _destroy(audio_recorder_view *view)
-{
-    app_reset_cbs(view->app);
-    _recorder_destroy(view);
-
-    if (view->preproc_file) {
-        fclose(view->preproc_file);
-    }
-
-    free(view->codec_list);
-    free(view);
-}*/
-
 void _main_layout_add(Evas_Object *layout, ui_gadget_h ug_handle, app_control_h service)
 {
 	audio_recorder_view *view = calloc(1, sizeof(audio_recorder_view));
@@ -493,14 +359,23 @@ void _main_layout_add(Evas_Object *layout, ui_gadget_h ug_handle, app_control_h 
 
 	// set layout file
 	double scale = elm_config_scale_get();
+	char edj_path[1024] = {0};
+	char *path = app_get_resource_path();
+	if (path == NULL) {
+		LOGD("resource path is null");
+		return;
+	}
+
+	snprintf(edj_path, 1024, "%s%s/%s", path, "edje", EDJ_FILE_NAME);
+	LOGD("edj_path path = %s", edj_path);
+	free(path);
+
 	if ((scale - 1.8) < 0.0001) {
-		LOGD("WVGA");
-		elm_layout_file_set(layout, "/usr/ug/res/edje/attach-panel-voicerecorder/audio_recorder.edj", "audio_recorder_wvga");
+		elm_layout_file_set(layout, edj_path, "audio_recorder_wvga");
 	} else if ((scale - 2.6) < 0.0001) {
-		LOGD("HD");
-		elm_layout_file_set(layout, "/usr/ug/res/edje/attach-panel-voicerecorder/audio_recorder.edj", "audio_recorder_hd");
+		elm_layout_file_set(layout, edj_path, "audio_recorder_hd");
 	} else {
-		elm_layout_file_set(layout, "/usr/ug/res/edje/attach-panel-voicerecorder/audio_recorder.edj", "audio_recorder_hd");
+		elm_layout_file_set(layout, edj_path, "audio_recorder_hd");
 	}
 
 	char *domain = VR_STR_DOMAIN_LOCAL;
@@ -523,30 +398,6 @@ void _main_layout_add(Evas_Object *layout, ui_gadget_h ug_handle, app_control_h 
 
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);
 }
-
-#if 0
-static void _on_recorder_audio_stream_cb(void* stream, int size, audio_sample_type_e format, int channel, unsigned int timestamp, void *user_data)
-{
-	audio_recorder_view *view = user_data;
-
-	if (view && view->preproc_file && !feof(view->preproc_file)) {
-		char buf[PREPROC_FILE_BUF_SIZE] = {0,};
-		int read_bytes = 0;
-
-		while (read_bytes != size) {
-			int request_bytes = MIN(PREPROC_FILE_BUF_SIZE, size - read_bytes);
-			int read = fread(buf, sizeof(char), request_bytes, view->preproc_file);
-
-			if (!read) {
-				break;
-			}
-
-			memcpy(stream + read_bytes, buf, read);
-			read_bytes += read;
-		}
-	}
-}
-#endif
 
 static void _on_recording_status_cb(unsigned long long elapsed_time, unsigned long long file_size, void *user_data)
 {
@@ -571,7 +422,6 @@ static void _on_recording_status_cb(unsigned long long elapsed_time, unsigned lo
 			sec = elapsed_time / 1000;
 		}
 
-		//LOGD("elapsed time is %d",elapsed_time);
 		char timer_string[MAX_LABEL_LEN] = { '\0' };
 
 		if (elapsed_time > 0) {
@@ -595,28 +445,16 @@ static void _on_recording_limit_reached_cb(recorder_recording_limit_type_e type,
 	}
 }
 
-/*static void _on_main_layout_del_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
-{
-    audio_recorder_view *view = data;
-    if (view) {
-        _destroy(view);
-    }
-}*/
-
 void _audio_recorder_view_set_view_layout(AudioRecorderViewType audio_recorder_view_type)
 {
-	LOGD("_audio_recorder_view_set_view_layout - START");
+	LOGD("_audio_recorder_view_set_view_layout");
 
 	audio_recorder_view *view = (audio_recorder_view *)_audio_recorder_view_get_data();
 	RETM_IF(!view, "view is NULL");
 
 	if (audio_recorder_view_type == AUDIO_RECORDER_COMPACT_VIEW) {
 		elm_object_signal_emit(view->layout, "compact_view", "prog");
-		LOGD("Audio recorder view is set to COMPACT_VIEW");
 	} else {
 		elm_object_signal_emit(view->layout, "full_view", "prog");
-		LOGD("Audio recorder view is set to FULL_VIEW");
 	}
-
-	LOGD("_audio_recorder_view_set_view_layout - END");
 }
