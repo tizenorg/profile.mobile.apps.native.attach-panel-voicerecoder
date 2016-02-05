@@ -133,6 +133,9 @@ static void _on_stop_btn_clicked_cb(void *data, Evas_Object *obj,
 			LOGD("notification_status_message_post()... [0x%x]", ret);
 		}
 	}
+    if (view->layout) {
+		elm_object_signal_emit(view->layout, "record_button_mouse_move", "elm_change_state_default");
+    }
 }
 
 static void _recorder_create(audio_recorder_view *view)

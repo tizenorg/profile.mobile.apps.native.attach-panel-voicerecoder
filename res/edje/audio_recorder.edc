@@ -352,6 +352,31 @@ group {
       }
     }//end click_on_record "mouse,down,1"
 
+	program {
+		name : "release_record_button";
+		signal : "record_button_mouse_move";
+		source : "elm_change_state_default";
+		script {
+			if(get_int(stopToggle) == 1)
+			{
+				if(get_int(iscompactview) == 0)
+				{
+					set_state(PART:"recorder_title","default",0.0);
+					set_state(PART:"record_icon_bg","default",0.0);
+					set_state(PART:"record_icon","default",0.0);
+				}
+				else
+				{
+					set_state(PART:"recorder_title","default_compact",0.0);
+					set_state(PART:"record_icon_bg","default_compact",0.0);
+					set_state(PART:"record_icon","default_compact",0.0);
+				}
+				set_int(stopToggle,0);
+				run_program(PROGRAM:"emit_stop_signal");
+			}
+		}
+	}//end release_record_button
+
     program {
       name:"click_on_record_up";
       signal:"mouse,up,1";
@@ -786,6 +811,31 @@ group {
 
       }
     }//end click_on_record "mouse,up,1"
+
+	program {
+		name : "release_record_button";
+		signal : "record_button_mouse_move";
+		source : "elm_change_state_default";
+		script {
+			if(get_int(stopToggle) == 1)
+			{
+				if(get_int(iscompactview) == 0)
+				{
+					set_state(PART:"recorder_title","default",0.0);
+					set_state(PART:"record_icon_bg","default",0.0);
+					set_state(PART:"record_icon","default",0.0);
+				}
+				else
+				{
+					set_state(PART:"recorder_title","default_compact",0.0);
+					set_state(PART:"record_icon_bg","default_compact",0.0);
+					set_state(PART:"record_icon","default_compact",0.0);
+				}
+				set_int(stopToggle,0);
+				run_program(PROGRAM:"emit_stop_signal");
+			}
+		}
+	}//end release_record_button
 
     program {
       name:"release_on_record";
