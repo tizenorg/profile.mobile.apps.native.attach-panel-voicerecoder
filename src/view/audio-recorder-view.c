@@ -349,7 +349,8 @@ void _main_layout_add(Evas_Object *layout, ui_gadget_h ug_handle, app_control_h 
 	view->limitsize = 0;
 	int ret = 0;
 	char *size_limit = NULL;
-	ret = app_control_get_extra_data(service, "http://tizen.org/appcontrol/data/total_size", &(size_limit));
+
+	ret = app_control_get_extra_data(service, APP_CONTROL_DATA_TOTAL_SIZE, &(size_limit));
 	if (ret != APP_CONTROL_ERROR_NONE) {
 		LOGD("Failed to get total_size information!!");
 	} else {
