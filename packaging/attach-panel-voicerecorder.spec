@@ -27,7 +27,7 @@ BuildRequires: pkgconfig(capi-content-media-content)
 BuildRequires: pkgconfig(libtzplatform-config)
 
 %description
-Description: voicerecorder UG
+Description: attach-panel-voicerecorder UG
 
 %prep
 %setup -q
@@ -61,14 +61,14 @@ cp LICENSE %{buildroot}%{_app_license_dir}/attach-panel-voicerecorder
 
 %post
 mkdir -p /usr/ug/bin/
-ln -sf %{_prefix}/bin/ug-client %{TZ_SYS_RO_UG}/bin/%{name}
+ln -sf /usr/bin/ug-client %{TZ_SYS_RO_UG}/bin/attach-panel-voicerecorder
 %postun
 
 %files
 %manifest %{name}.manifest
 %defattr(-,root,root,-)
-%{TZ_SYS_RO_UG}/lib/libattach-panel-voicerecorder.so*
-%{TZ_SYS_RO_UG}/res/edje/attach-panel-voicerecorder/*
+%{TZ_SYS_RO_UG}/lib/libug-attach-panel-voicerecorder.so*
+%{TZ_SYS_RO_UG}/res/edje/ug-attach-panel-voicerecorder/*
 %{TZ_SYS_RO_UG}/res/images/attach-panel-voicerecorder/*
 %{TZ_SYS_RO_UG}/res/locale/*
 %{TZ_SYS_RO_PACKAGES}/attach-panel-voicerecorder.xml

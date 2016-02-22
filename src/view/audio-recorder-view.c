@@ -42,7 +42,7 @@
 #define STR_NOTIFICATION_TEXT			"IDS_VR_TPOP_UNABLE_TO_SAVE_RECORDING_RECORDING_TOO_SHORT"
 #define VR_STR_DOMAIN_SYS			"sys_string"
 #define VR_STR_DOMAIN_LOCAL			"attach-panel-voicerecorder"
-#define EDJ_FILE_NAME				"audio_recorder.edj"
+#define EDJ_FILE_NAME				PREFIX"/res/edje/ug-attach-panel-voicerecorder/audio_recorder.edj"
 
 static audio_recorder_view *viewhandle = NULL;
 
@@ -363,23 +363,13 @@ void _main_layout_add(Evas_Object *layout, ui_gadget_h ug_handle, app_control_h 
 
 	// set layout file
 	double scale = elm_config_scale_get();
-	char edj_path[1024] = {0};
-	char *path = app_get_resource_path();
-	if (path == NULL) {
-		LOGD("resource path is null");
-		return;
-	}
-
-	snprintf(edj_path, 1024, "%s%s/%s", path, "edje", EDJ_FILE_NAME);
-	LOGD("edj_path path = %s", edj_path);
-	free(path);
 
 	if ((scale - 1.8) < 0.0001) {
-		elm_layout_file_set(layout, edj_path, "audio_recorder_wvga");
+		elm_layout_file_set(layout,	EDJ_FILE_NAME, "audio_recorder_wvga");
 	} else if ((scale - 2.6) < 0.0001) {
-		elm_layout_file_set(layout, edj_path, "audio_recorder_hd");
+		elm_layout_file_set(layout,	EDJ_FILE_NAME, "audio_recorder_hd");
 	} else {
-		elm_layout_file_set(layout, edj_path, "audio_recorder_hd");
+		elm_layout_file_set(layout,	EDJ_FILE_NAME, "audio_recorder_hd");
 	}
 
 	char *domain = VR_STR_DOMAIN_LOCAL;
