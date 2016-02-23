@@ -19,8 +19,7 @@
 #include <assert.h>
 #include <app_control.h>
 #include <media_content.h>
-#include <tzplatform_config.h>
-
+#include <storage.h>
 #include "utils/config.h"
 #include "utils/audio-recorder-utils.h"
 #include "view/audio-recorder-view.h"
@@ -210,7 +209,8 @@ static void _recorder_start(audio_recorder_view *view)
 	struct tm localtime = {0,};
 	time_t rawtime = time(NULL);
 	char filename[256] = {'\0',};
-	const char* music_content_path = tzplatform_getenv(TZ_USER_SOUNDS);
+	char *music_content_path = NULL;
+	storage_get_directory(STORAGE_TYPE_INTERNAL, STORAGE_DIRECTORY_SOUNDS, &music_content_path);
 	if (music_content_path == NULL) {
 		LOGD("music_content_path is NULL");
 		return;
