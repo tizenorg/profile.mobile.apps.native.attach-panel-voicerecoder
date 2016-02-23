@@ -47,6 +47,7 @@ pkg_check_modules(pkgs REQUIRED
 	capi-appfw-application
 	ui-gadget-1
 	capi-content-media-content
+	storage
 	libtzplatform-config
 )
 
