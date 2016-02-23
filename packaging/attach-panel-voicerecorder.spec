@@ -23,6 +23,7 @@ BuildRequires: pkgconfig(efl-extension)
 BuildRequires: pkgconfig(capi-media-recorder)
 BuildRequires: pkgconfig(capi-appfw-application)
 BuildRequires: pkgconfig(ui-gadget-1)
+BuildRequires: pkgconfig(storage)
 BuildRequires: pkgconfig(capi-content-media-content)
 BuildRequires: pkgconfig(libtzplatform-config)
 
