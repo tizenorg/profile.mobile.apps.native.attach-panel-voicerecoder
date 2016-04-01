@@ -21,7 +21,7 @@ FOREACH(pofile ${POFILES})
 			COMMAND ${MSGFMT} -o ${moFile} ${absPofile}
 			DEPENDS ${absPofile}
 	)
-	INSTALL(FILES ${moFile} DESTINATION ${LOCALEDIR}/${lang}/LC_MESSAGES RENAME ${PROJECT_NAME}.mo)
+	INSTALL(FILES ${moFile} DESTINATION ${LOCALEDIR}/${lang}/LC_MESSAGES RENAME attach-panel-voicerecorder.mo)
 	SET(moFiles ${moFiles} ${moFile})
 ENDFOREACH(pofile)
 

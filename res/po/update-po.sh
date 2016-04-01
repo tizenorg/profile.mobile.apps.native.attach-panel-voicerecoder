@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PACKAGE=gallery
+PACKAGE=attach-panel-voicerecorder
 SRCROOT=..
 POTFILES=POTFILES.in
 
