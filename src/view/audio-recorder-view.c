@@ -20,6 +20,7 @@
 #include <app_control.h>
 #include <media_content.h>
 #include <storage.h>
+#include <notification.h>
 #include "utils/config.h"
 #include "utils/audio-recorder-utils.h"
 #include "view/audio-recorder-view.h"
@@ -384,10 +385,10 @@ void _main_layout_add(Evas_Object *layout, ui_gadget_h ug_handle, app_control_h 
 	evas_object_show(rec_btn);
 	view->gesture_long_tap = elm_gesture_layer_add(rec_btn);
 
-	elm_gesture_layer_cb_set(view->gesture_long_tap, ELM_GESTURE_N_LONG_TAPS, ELM_GESTURE_STATE_START, _on_start_btn_clicked_cb, view);
-	elm_gesture_layer_cb_set(view->gesture_long_tap, ELM_GESTURE_N_LONG_TAPS, ELM_GESTURE_STATE_MOVE, _on_start_btn_pressed_cb, view);
-	elm_gesture_layer_cb_set(view->gesture_long_tap, ELM_GESTURE_N_LONG_TAPS, ELM_GESTURE_STATE_END, _on_stop_btn_pressed_cb, view);
-	elm_gesture_layer_cb_set(view->gesture_long_tap, ELM_GESTURE_N_LONG_TAPS, ELM_GESTURE_STATE_ABORT, _on_stop_btn_clicked_cb, view);
+	elm_gesture_layer_cb_set(view->gesture_long_tap, ELM_GESTURE_N_LONG_TAPS, ELM_GESTURE_STATE_START, (Elm_Gesture_Event_Cb)_on_start_btn_clicked_cb, view);
+	elm_gesture_layer_cb_set(view->gesture_long_tap, ELM_GESTURE_N_LONG_TAPS, ELM_GESTURE_STATE_MOVE, (Elm_Gesture_Event_Cb)_on_start_btn_pressed_cb, view);
+	elm_gesture_layer_cb_set(view->gesture_long_tap, ELM_GESTURE_N_LONG_TAPS, ELM_GESTURE_STATE_END, (Elm_Gesture_Event_Cb)_on_stop_btn_pressed_cb, view);
+	elm_gesture_layer_cb_set(view->gesture_long_tap, ELM_GESTURE_N_LONG_TAPS, ELM_GESTURE_STATE_ABORT, (Elm_Gesture_Event_Cb)_on_stop_btn_clicked_cb, view);
 	elm_gesture_layer_attach(view->gesture_long_tap, rec_btn);
 
 	evas_object_size_hint_align_set(layout, EVAS_HINT_FILL, EVAS_HINT_FILL);

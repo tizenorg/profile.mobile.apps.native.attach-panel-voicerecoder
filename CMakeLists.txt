@@ -48,6 +48,7 @@ pkg_check_modules(pkgs REQUIRED
 	ui-gadget-1
 	capi-content-media-content
 	storage
+	notification
 	libtzplatform-config
 )
 
