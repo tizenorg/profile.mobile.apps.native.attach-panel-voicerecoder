@@ -111,25 +111,65 @@ group {
 		}
     }//end recorder_title
 	part {
-		name:"recorder_timer";
+		name:"recorder_timer_min";
 		type:TEXT;
 		description {
 			state:"default" 0.0;
 			align: 0.5 0.5;
 			rel1 { relative: 0.0 0.388; to: "bg";}
-			rel2 { relative: 1.0 0.523; to: "bg";}
+			rel2 { relative: 0.45 0.523; to: "bg";}
 			color:255 255 255 255;
-			text { font: "Tizen:style=Light";align:0.5 0.5; size: 120; text:"00 : 00"; }
+			text { font: "Tizen:style=Light";align:1.0 0.5; size: 120; text:"00"; }
 		}
 		description {
 			state:"default_compact" 0.0;
 			align: 0.5 0.5;
 			rel1 { relative: 0.0 0.176; to: "bg";}
+			rel2 { relative: 0.45 0.567; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:1.0 0.5; size: 120; text:"00"; }
+		}
+	}//end recorder_timer_min
+	part {
+		name:"recorder_timer_divider";
+		type:TEXT;
+		description {
+			state:"default" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.45 0.388; to: "bg";}
+			rel2 { relative: 0.55 0.523; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 120; text:":"; }
+		}
+		description {
+			state:"default_compact" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.45 0.176; to: "bg";}
+			rel2 { relative: 0.55 0.567; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 120; text:":"; }
+		}
+	} //end recorder_timer_divider
+	part {
+		name:"recorder_timer_sec";
+		type:TEXT;
+		description {
+			state:"default" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.55 0.388; to: "bg";}
+			rel2 { relative: 1.0 0.523; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.0 0.5; size: 120; text:"00"; }
+		}
+		description {
+			state:"default_compact" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.55 0.176; to: "bg";}
 			rel2 { relative: 1.0 0.567; to: "bg";}
 			color:255 255 255 255;
-			text { font: "Tizen:style=Light";align:0.5 0.5; size: 120; text:"00 : 00"; }
+			text { font: "Tizen:style=Light";align:0.0 0.5; size: 120; text:"00"; }
 		}
-	}//end recorder_timer
+	}//end recorder_timer_sec
     part {
       name:"record_icon_bg";
       type:IMAGE;
@@ -306,7 +346,9 @@ group {
 		script {
 			setcompactview();
 			set_state(PART:"recorder_title","default_compact",0.0);
-			set_state(PART:"recorder_timer","default_compact",0.0);
+			set_state(PART:"recorder_timer_min","default_compact",0.0);
+			set_state(PART:"recorder_timer_divider","default_compact",0.0);
+			set_state(PART:"recorder_timer_sec","default_compact",0.0);
 			set_state(PART:"record_icon_bg","default_compact",0.0);
 			set_state(PART:"record_icon","default_compact",0.0);
 		}
@@ -318,7 +360,9 @@ group {
 		script {
 			setfullview();
 			set_state(PART:"recorder_title","default",0.0);
-			set_state(PART:"recorder_timer","default",0.0);
+			set_state(PART:"recorder_timer_min","default",0.0);
+			set_state(PART:"recorder_timer_divider","default",0.0);
+			set_state(PART:"recorder_timer_sec","default",0.0);
 			set_state(PART:"record_icon_bg","default",0.0);
 			set_state(PART:"record_icon","default",0.0);
 		}
@@ -544,25 +588,65 @@ group {
 		}
     }//end recorder_title
 	part {
-		name:"recorder_timer";
+		name:"recorder_timer_min";
 		type:TEXT;
 		description {
 			state:"default" 0.0;
 			align: 0.5 0.5;
 			rel1 { relative: 0.0 0.388; to: "bg";}
-			rel2 { relative: 1.0 0.523; to: "bg";}
+			rel2 { relative: 0.45 0.523; to: "bg";}
 			color:255 255 255 255;
-			text { font: "Tizen:style=Light";align:0.5 0.5; size: 90; text:"00 : 00"; }
+			text { font: "Tizen:style=Light";align:1.0 0.5; size: 90; text:"00"; }
 		}
 		description {
 			state:"default_compact" 0.0;
 			align: 0.5 0.5;
 			rel1 { relative: 0.0 0.176; to: "bg";}
+			rel2 { relative: 0.45 0.567; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:1.0 0.5; size: 90; text:"00"; }
+		}
+	}//end recorder_timer_min
+	part {
+		name:"recorder_timer_divider";
+		type:TEXT;
+		description {
+			state:"default" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.45 0.388; to: "bg";}
+			rel2 { relative: 0.55 0.523; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 90; text:":"; }
+		}
+		description {
+			state:"default_compact" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.45 0.176; to: "bg";}
+			rel2 { relative: 0.55 0.567; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.5 0.5; size: 90; text:":"; }
+		}
+	}  //end recorder_timer_div
+	part {
+		name:"recorder_timer_sec";
+		type:TEXT;
+		description {
+			state:"default" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.55 0.388; to: "bg";}
+			rel2 { relative: 1.0 0.523; to: "bg";}
+			color:255 255 255 255;
+			text { font: "Tizen:style=Light";align:0.0 0.5; size: 90; text:"00"; }
+		}
+		description {
+			state:"default_compact" 0.0;
+			align: 0.5 0.5;
+			rel1 { relative: 0.55 0.176; to: "bg";}
 			rel2 { relative: 1.0 0.567; to: "bg";}
 			color:255 255 255 255;
-			text { font: "Tizen:style=Light";align:0.5 0.5; size: 90; text:"00 : 00"; }
+			text { font: "Tizen:style=Light";align:0.0 0.5; size: 90; text:"00"; }
 		}
-	}//end recorder_timer
+	}//end recorder_timer_sec
     part {
       name:"record_icon_bg";
       type:IMAGE;
@@ -737,7 +821,9 @@ group {
 		script {
 			setcompactview();
 			set_state(PART:"recorder_title","default_compact",0.0);
-			set_state(PART:"recorder_timer","default_compact",0.0);
+			set_state(PART:"recorder_timer_min","default_compact",0.0);
+			set_state(PART:"recorder_timer_divider","default_compact",0.0);
+			set_state(PART:"recorder_timer_sec","default_compact",0.0);
 			set_state(PART:"record_icon_bg","default_compact",0.0);
 			set_state(PART:"record_icon","default_compact",0.0);
 		}
@@ -749,7 +835,9 @@ group {
 		script {
 			setfullview();
 			set_state(PART:"recorder_title","default",0.0);
-			set_state(PART:"recorder_timer","default",0.0);
+			set_state(PART:"recorder_timer_min","default",0.0);
+			set_state(PART:"recorder_timer_divider","default",0.0);
+			set_state(PART:"recorder_timer_sec","default",0.0);
 			set_state(PART:"record_icon_bg","default",0.0);
 			set_state(PART:"record_icon","default",0.0);
 		}
