@@ -289,7 +289,8 @@ static void _recorder_stop(audio_recorder_view *view)
 		}
 
 		_main_file_register(view->file_path);
-		elm_object_part_text_set(view->layout, "recorder_timer", "00 : 00");
+		elm_object_part_text_set(view->layout, "recorder_timer_min", "00");
+		elm_object_part_text_set(view->layout, "recorder_timer_sec", "00");
 		char *domain = VR_STR_DOMAIN_LOCAL;
 		elm_object_domain_translatable_part_text_set(view->layout, "recorder_title", domain, STR_RECORDER_TITLE);
 
@@ -417,13 +418,16 @@ static void _on_recording_status_cb(unsigned long long elapsed_time, unsigned lo
 			sec = elapsed_time / 1000;
 		}
 
-		char timer_string[MAX_LABEL_LEN] = { '\0' };
+		char timer_string_min[MAX_LABEL_LEN] = { '\0' };
+		char timer_string_sec[MAX_LABEL_LEN] = { '\0' };
 
 		if (elapsed_time > 0) {
-			snprintf(timer_string, MAX_LABEL_LEN, "%02d : %02d", min, sec);
+			snprintf(timer_string_min, MAX_LABEL_LEN, "%02d", min);
+			snprintf(timer_string_sec, MAX_LABEL_LEN, "%02d", sec);
 		}
 
-		elm_object_part_text_set(view->layout, "recorder_timer", timer_string);
+		elm_object_part_text_set(view->layout, "recorder_timer_min", timer_string_min);
+		elm_object_part_text_set(view->layout, "recorder_timer_sec", timer_string_sec);
 		evas_object_show(view->layout);
 	}
 }
